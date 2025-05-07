@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Flight Search Application</title>
+    
+        <!-- Bootstrap CSS for styling -->
+        <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+          /* Hero section styling */
+          .hero-section {
+            background-color: #f8f9fa;
+            padding: 3rem 1rem;
+            text-align: center;
+          }
+          /* Search form styling */
+          .search-form {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+          }
+          .search-form .form-control {
+            margin-bottom: 1rem;
+          }
+          /* Results section styling */
+          .results-section {
+            margin-top: 2rem;
+          }
+          .flight-card {
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+          }
+          /* Error message styling */
+          .error-message {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+          }
+        </style>
+    </head>
+    <body>
+        <!-- Header section with application branding -->
+        <header class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <strong>Flight Search</strong>
+                </a>
+            </div>
+        </header>
+
+        <main>
+            <!-- Hero section with a welcoming message -->
+            <section class="hero-section">
+                <div class="container">
+                    <h1 class="fw-light">Find Your Perfect Flight</h1>
+                    <p class="lead text-muted">Search and book flights to your favorite destinations.</p>
+                </div>
+            </section>
+
+            <!-- Flight search form section -->
+            <section class="py-5">
+                <div class="container">
+                    <div class="search-form">
+                        <form id="flight-search-form">
+                            <!-- Row for departure and destination inputs -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="departure" class="form-label">Departure</label>
+                                    <input type="text" class="form-control" id="departure" placeholder="Enter departure airport code (e.g., JFK)" aria-label="Departure Airport">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="destination" class="form-label">Destination</label>
+                                    <input type="text" class="form-control" id="destination" placeholder="Enter destination airport code (e.g., LAX)">
+                                </div>
+                            </div>
+                            <!-- Row for travel dates -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="departure-date" class="form-label">Departure Date</label>
+                                    <input type="date" class="form-control" id="departure-date">
+                                </div>
+                            </div>
+                            <!-- Row for number of passengers -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="passengers" class="form-label">Passengers</label>
+                                    <input type="number" class="form-control" id="passengers" placeholder="Number of passengers">
+                                </div>
+                            </div>
+                            <!-- Submit button -->
+                            <div class="text-center mt-4">
+                                <button type="button" class="btn btn-primary" onclick="searchFlights()">Search Flights</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results section -->
+            <section class="results-section">
+                <div class="container">
+                    <h2 class="text-center">Search Results</h2>
+                    <div id="results-container"></div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer section -->
+        <footer class="text-muted py-5">
+            <div class="container">
+                <p class="mb-1">Flight Search Application &copy; 2025</p>
+                <p class="mb-0">Need help? <a href="#">Contact us</a>.</p>
+            </div>
+        </footer>
+
+        <!-- Bootstrap JS for interactivity -->
+        <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            async function searchFlights() {
+                const departure = document.getElementById("departure").value; // Departure city/airport
+                const destination = document.getElementById("destination").value; // Destination city/airport
+                const departureDate = document.getElementById("departure-date").value; // Departure date
+                const passengers = document.getElementById("passengers").value; // Number of passengers
+
+                // Validation to ensure all required fields are filled
+                if (!departure || !destination || !departureDate) {
+                    alert("Please fill in all required fields.");
+                    return;
+                }
+
+                // Validate the number of passengers
+                if (!passengers || passengers <= 0) {
+                    alert("Please enter a valid number of passengers.");
+                    return;
+                }
+
+                // Format the departure date to match the API's expected format (DD/MM/YYYY)
+                const dateObj = new Date(departureDate);
+                const formattedDate = `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getFullYear()}`;
+
+                // Check for valid date
+                if (isNaN(dateObj.getTime())) {
+                    alert("Please enter a valid departure date.");
+                    return;
+                }
+
+                // Skypicker API URL with query parameters
+                const apiUrl = `/api/flights?from=${departure}&to=${destination}&dateFrom=${formattedDate}&dateTo=${formattedDate}`;
+
+                try {
+                    const response = await fetch(apiUrl);
+
+                    if (!response.ok) {
+                        throw new Error("Failed to fetch flight data from the API");
+                    }
+
+                    const data = await response.json();
+                    const resultsContainer = document.getElementById("results-container");
+                    resultsContainer.innerHTML = "<p class='text-center'>Loading...</p>"; // Show loading message
+
+                    if (!data || !data.data || data.data.length === 0) {
+                        resultsContainer.innerHTML = "<p class='error-message'>No flights found. Please try again.</p>";
+                        return;
+                    }
+
+                    data.data.forEach(flight => {
+                        const flightCard = document.createElement("div");
+                        flightCard.className = "flight-card";
+                        flightCard.innerHTML = `
+                            <h5>From ${flight.cityFrom} to ${flight.cityTo}</h5>
+                            <p><strong>Price:</strong> $${flight.price} ${flight.currency}</p>
+                            <p><strong>Departure:</strong> ${new Date(flight.dTimeUTC * 1000).toLocaleString()}</p>
+                            <p><strong>Arrival:</strong> ${new Date(flight.aTimeUTC * 1000).toLocaleString()}</p>
+                            <a href="${flight.deep_link}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Book Now</a>
+                        `;
+                        resultsContainer.appendChild(flightCard);
+                    });
+                } catch (error) {
+                    console.error("API Error:", error);
+                    resultsContainer.innerHTML = "<p class='text-center error-message'>An error occurred while fetching flight data. Please try again later.</p>";
+                }
+            }
+        </script>
+    </body>
+</html>
+
