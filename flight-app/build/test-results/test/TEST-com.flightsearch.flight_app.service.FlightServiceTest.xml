@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.flightsearch.flight_app.service.FlightServiceTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2025-05-08T23:05:40.055Z" hostname="MacBookPro" time="0.336">
+  <properties/>
+  <testcase name="testFetchCurrentFlights()" classname="com.flightsearch.flight_app.service.FlightServiceTest" time="0.336">
+    <failure message="org.opentest4j.AssertionFailedError: expected: &lt;1&gt; but was: &lt;0&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;1&gt; but was: &lt;0&gt;
+	at app//org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at app//org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at app//org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at app//org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)
+	at app//com.flightsearch.flight_app.service.FlightServiceTest.testFetchCurrentFlights(FlightServiceTest.java:44)
+	at java.base@17.0.7/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base@17.0.7/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base@17.0.7/java.util.ArrayList.forEach(ArrayList.java:1511)
+</failure>
+  </testcase>
+  <system-out><![CDATA[19:05:38.745 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.flightsearch.flight_app.service.FlightServiceTest]: FlightServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+19:05:38.794 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.flightsearch.flight_app.FlightAppApplication for test class com.flightsearch.flight_app.service.FlightServiceTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.5)
+
+2025-05-08T19:05:38.976-04:00  INFO 25934 --- [flight-app] [    Test worker] c.f.f.service.FlightServiceTest          : Starting FlightServiceTest using Java 17.0.7 with PID 25934 (started by christopherwhite in /Users/christopherwhite/Desktop/GitHub Repositories/flightsearchapplication/flight-app)
+2025-05-08T19:05:38.977-04:00  INFO 25934 --- [flight-app] [    Test worker] c.f.f.service.FlightServiceTest          : No active profile set, falling back to 1 default profile: "default"
+Injected API Key: fd23b1f783d01390e67472eea6d75ff1
+2025-05-08T19:05:39.345-04:00  INFO 25934 --- [flight-app] [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-05-08T19:05:39.469-04:00  INFO 25934 --- [flight-app] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-05-08T19:05:39.548-04:00  INFO 25934 --- [flight-app] [    Test worker] c.f.f.service.FlightServiceTest          : Started FlightServiceTest in 0.683 seconds (process running for 1.204)
+]]></system-out>
+  <system-err><![CDATA[Error fetching flight data: 401 Unauthorized on GET request for "https://api.aviationstack.com/v1/flights": "{<EOL>  "error": {<EOL>    "code": "invalid_access_key",<EOL>    "message": "You have not supplied a valid API Access Key."<EOL>  }<EOL>}<EOL>"
+]]></system-err>
+</testsuite>

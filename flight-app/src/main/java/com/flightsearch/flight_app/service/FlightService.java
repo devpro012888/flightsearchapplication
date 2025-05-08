@@ -18,14 +18,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.annotation.PostConstruct;
 
 @Service
 public class FlightService {
 
     private final List<Flight> flights = new ArrayList<>();
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${aviationstack.api.key}")
     private String apiKey;
+
+    // Log the injected API key to verify property loading
+    @PostConstruct
+    public void logApiKey() {
+        System.out.println("Injected API Key: " + apiKey);
+    }
 
     // Initialize with sample data
     public FlightService() {
@@ -66,6 +74,34 @@ public class FlightService {
             return flights;
         } catch (Exception e) {
             e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public List<Flight> fetchCurrentFlights() {
+        String url = "https://api.aviationstack.com/v1/flights?access_key=" + apiKey;
+        try {
+            String response = restTemplate.getForObject(url, String.class);
+            System.out.println("Raw API Response: " + response);
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readTree(response);
+            JsonNode dataNode = rootNode.path("data");
+
+            List<Flight> flights = new ArrayList<>();
+            for (JsonNode flightNode : dataNode) {
+                Flight flight = new Flight();
+                flight.setDeparture(flightNode.path("departure").path("airport").asText());
+                flight.setDestination(flightNode.path("arrival").path("airport").asText());
+                flight.setDepartureDate(flightNode.path("departure").path("scheduled").asText());
+                flight.setReturnDate(flightNode.path("arrival").path("scheduled").asText());
+                flight.setPassengers(0); // Placeholder, as passenger data is not available in the API
+                flight.setPrice(0); // Placeholder, as price data is not available in the API
+                flights.add(flight);
+            }
+
+            return flights;
+        } catch (Exception e) {
+            System.err.println("Error fetching flight data: " + e.getMessage());
             return new ArrayList<>();
         }
     }
