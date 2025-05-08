@@ -2,6 +2,8 @@ package com.flightsearch.flight_app.service;
 
 import com.flightsearch.flight_app.model.Flight;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,11 +16,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class FlightService {
 
     private final List<Flight> flights = new ArrayList<>();
+
+    @Value("${aviationstack.api.key}")
+    private String apiKey;
 
     // Initialize with sample data
     public FlightService() {
@@ -36,6 +43,31 @@ public class FlightService {
                                   flight.getReturnDate().equals(returnDate) &&
                                   flight.getPassengers() >= passengers)
                 .collect(Collectors.toList());
+    }
+
+    public List<Flight> fetchFlightsFromAviationStack(String departure, String destination) {
+        String url = String.format("http://api.aviationstack.com/v1/flights?access_key=%s&dep_iata=%s&arr_iata=%s", apiKey, departure, destination);
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            String response = restTemplate.getForObject(url, String.class);
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readTree(response);
+            JsonNode dataNode = rootNode.path("data");
+
+            List<Flight> flights = new ArrayList<>();
+            for (JsonNode flightNode : dataNode) {
+                Flight flight = new Flight();
+                flight.setDeparture(flightNode.path("departure").path("iata").asText());
+                flight.setDestination(flightNode.path("arrival").path("iata").asText());
+                flight.setDepartureDate(flightNode.path("departure").path("scheduled").asText());
+                flight.setReturnDate(flightNode.path("arrival").path("scheduled").asText());
+                flights.add(flight);
+            }
+            return flights;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
     public boolean authenticateUser(String username, String password) {

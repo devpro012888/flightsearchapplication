@@ -37,6 +37,11 @@ public class FlightController {
         return flightService.searchFlights(departure, destination, departureDate, returnDate, passengers);
     }
 
+    @GetMapping("/fetch")
+    public List<Flight> fetchFlightsFromAviationStack(@RequestParam String departure, @RequestParam String destination) {
+        return flightService.fetchFlightsFromAviationStack(departure, destination);
+    }
+
     @PostMapping("/authenticate")
     public ResponseEntity<String> authenticateUser(@RequestParam String username, @RequestParam String password) {
         boolean isAuthenticated = flightService.authenticateUser(username, password);

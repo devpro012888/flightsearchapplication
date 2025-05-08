@@ -9,6 +9,10 @@ public class Flight {
     private int passengers;
     private double price;
 
+    // Default constructor for API mapping
+    public Flight() {
+    }
+
     // Constructor
     public Flight(int id, String departure, String destination, String departureDate, String returnDate, int passengers, double price) {
         this.id = id;
