@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.flightsearch.flight_app.service.FlightServiceTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2025-05-08T23:05:40.055Z" hostname="MacBookPro" time="0.336">
+<testsuite name="com.flightsearch.flight_app.service.FlightServiceTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2025-05-13T21:56:15.490Z" hostname="MacBookPro" time="0.435">
   <properties/>
-  <testcase name="testFetchCurrentFlights()" classname="com.flightsearch.flight_app.service.FlightServiceTest" time="0.336">
+  <testcase name="testFetchCurrentFlights()" classname="com.flightsearch.flight_app.service.FlightServiceTest" time="0.435">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;1&gt; but was: &lt;0&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;1&gt; but was: &lt;0&gt;
 	at app//org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at app//org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
@@ -15,8 +15,8 @@
 	at java.base@17.0.7/java.util.ArrayList.forEach(ArrayList.java:1511)
 </failure>
   </testcase>
-  <system-out><![CDATA[19:05:38.745 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.flightsearch.flight_app.service.FlightServiceTest]: FlightServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-19:05:38.794 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.flightsearch.flight_app.FlightAppApplication for test class com.flightsearch.flight_app.service.FlightServiceTest
+  <system-out><![CDATA[17:56:13.205 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.flightsearch.flight_app.service.FlightServiceTest]: FlightServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+17:56:13.267 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.flightsearch.flight_app.FlightAppApplication for test class com.flightsearch.flight_app.service.FlightServiceTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -27,12 +27,34 @@
 
  :: Spring Boot ::                (v3.4.5)
 
-2025-05-08T19:05:38.976-04:00  INFO 25934 --- [flight-app] [    Test worker] c.f.f.service.FlightServiceTest          : Starting FlightServiceTest using Java 17.0.7 with PID 25934 (started by christopherwhite in /Users/christopherwhite/Desktop/GitHub Repositories/flightsearchapplication/flight-app)
-2025-05-08T19:05:38.977-04:00  INFO 25934 --- [flight-app] [    Test worker] c.f.f.service.FlightServiceTest          : No active profile set, falling back to 1 default profile: "default"
+2025-05-13T17:56:13.454-04:00  INFO 50864 --- [flight-app] [    Test worker] c.f.f.service.FlightServiceTest          : Starting FlightServiceTest using Java 17.0.7 with PID 50864 (started by christopherwhite in /Users/christopherwhite/Desktop/GitHub Repositories/flightsearchapplication/flight-app)
+2025-05-13T17:56:13.455-04:00  INFO 50864 --- [flight-app] [    Test worker] c.f.f.service.FlightServiceTest          : No active profile set, falling back to 1 default profile: "default"
+2025-05-13T17:56:13.725-04:00  INFO 50864 --- [flight-app] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-13T17:56:13.754-04:00  INFO 50864 --- [flight-app] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 22 ms. Found 1 JPA repository interface.
+2025-05-13T17:56:13.901-04:00  INFO 50864 --- [flight-app] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-05-13T17:56:13.976-04:00  INFO 50864 --- [flight-app] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:flightdb user=SA
+2025-05-13T17:56:13.977-04:00  INFO 50864 --- [flight-app] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-05-13T17:56:14.043-04:00  INFO 50864 --- [flight-app] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-13T17:56:14.065-04:00  INFO 50864 --- [flight-app] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.13.Final
+2025-05-13T17:56:14.080-04:00  INFO 50864 --- [flight-app] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-13T17:56:14.199-04:00  INFO 50864 --- [flight-app] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-13T17:56:14.219-04:00  WARN 50864 --- [flight-app] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-05-13T17:56:14.228-04:00  INFO 50864 --- [flight-app] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-05-13T17:56:14.576-04:00  INFO 50864 --- [flight-app] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-13T17:56:14.590-04:00  INFO 50864 --- [flight-app] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 Injected API Key: fd23b1f783d01390e67472eea6d75ff1
-2025-05-08T19:05:39.345-04:00  INFO 25934 --- [flight-app] [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2025-05-08T19:05:39.469-04:00  INFO 25934 --- [flight-app] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2025-05-08T19:05:39.548-04:00  INFO 25934 --- [flight-app] [    Test worker] c.f.f.service.FlightServiceTest          : Started FlightServiceTest in 0.683 seconds (process running for 1.204)
+2025-05-13T17:56:14.760-04:00  WARN 50864 --- [flight-app] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-05-13T17:56:14.773-04:00  INFO 50864 --- [flight-app] [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2025-05-13T17:56:14.931-04:00  INFO 50864 --- [flight-app] [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:flightdb'
+2025-05-13T17:56:14.972-04:00  INFO 50864 --- [flight-app] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-05-13T17:56:15.055-04:00  INFO 50864 --- [flight-app] [    Test worker] c.f.f.service.FlightServiceTest          : Started FlightServiceTest in 1.715 seconds (process running for 2.271)
 ]]></system-out>
   <system-err><![CDATA[Error fetching flight data: 401 Unauthorized on GET request for "https://api.aviationstack.com/v1/flights": "{<EOL>  "error": {<EOL>    "code": "invalid_access_key",<EOL>    "message": "You have not supplied a valid API Access Key."<EOL>  }<EOL>}<EOL>"
 ]]></system-err>
