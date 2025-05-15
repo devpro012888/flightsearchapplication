@@ -11,9 +11,13 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class XmlUserDetailsService implements UserDetailsService {
-    private static final String USERS_XML_PATH = "src/main/resources/users.xml";
+    // Use the absolute path to ensure the file is found in both dev and prod
+    private static final String USERS_XML_PATH = "flight-app/users.xml";
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -31,7 +35,7 @@ public class XmlUserDetailsService implements UserDetailsService {
                 String xmlUsername = userElement.getElementsByTagName("username").item(0).getTextContent();
                 String xmlPassword = userElement.getElementsByTagName("password").item(0).getTextContent();
                 if (xmlUsername.equals(username)) {
-                    // Passwords should be stored encoded; if not, encode on registration
+                    // Return the user with the hashed password (Spring Security will check the hash)
                     return User.withUsername(xmlUsername)
                             .password(xmlPassword)
                             .roles("USER")
