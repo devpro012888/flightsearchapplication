@@ -148,8 +148,8 @@
                     return;
                 }
 
-                // Skypicker API URL with query parameters
-                const apiUrl = `/api/flights?from=${departure}&to=${destination}&dateFrom=${formattedDate}&dateTo=${formattedDate}`;
+                // Use AviationStack API endpoint with dep_iata and arr_iata
+                const apiUrl = `/api/flights/fetch?departure=${departure}&destination=${destination}`;
 
                 try {
                     const response = await fetch(apiUrl);
@@ -162,20 +162,19 @@
                     const resultsContainer = document.getElementById("results-container");
                     resultsContainer.innerHTML = "<p class='text-center'>Loading...</p>"; // Show loading message
 
-                    if (!data || !data.data || data.data.length === 0) {
+                    if (!data || data.length === 0) {
                         resultsContainer.innerHTML = "<p class='error-message'>No flights found. Please try again.</p>";
                         return;
                     }
 
-                    data.data.forEach(flight => {
+                    resultsContainer.innerHTML = "";
+                    data.forEach(flight => {
                         const flightCard = document.createElement("div");
                         flightCard.className = "flight-card";
                         flightCard.innerHTML = `
-                            <h5>From ${flight.cityFrom} to ${flight.cityTo}</h5>
-                            <p><strong>Price:</strong> $${flight.price} ${flight.currency}</p>
-                            <p><strong>Departure:</strong> ${new Date(flight.dTimeUTC * 1000).toLocaleString()}</p>
-                            <p><strong>Arrival:</strong> ${new Date(flight.aTimeUTC * 1000).toLocaleString()}</p>
-                            <a href="${flight.deep_link}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Book Now</a>
+                            <h5>From ${flight.departure} to ${flight.destination}</h5>
+                            <p><strong>Departure:</strong> ${flight.departureDate}</p>
+                            <p><strong>Arrival:</strong> ${flight.returnDate}</p>
                         `;
                         resultsContainer.appendChild(flightCard);
                     });

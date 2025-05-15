@@ -2,10 +2,10 @@
 <users>
     <user>
         <username>testuser</username>
-        <password>password123</password>
+        <password>$2a$12$foG6ls/fpaEp/HVjgIdOV.ElqotrABi..aPRZjsKZ6tUXtuvbQFHu</password>
     </user>
     <user>
         <username>admin</username>
-        <password>adminpass</password>
+        <password>$2a$12$/YpJ8lZyDeeAGE23VB.JD.9.ZT7MfO08njojVm4AmEHqP8PFj11e6</password>
     </user>
 </users>

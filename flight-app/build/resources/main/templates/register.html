@@ -1,0 +1,57 @@
+<!-- This is the user registration page for the Flight Search Application -->
+<!-- It includes a form for users to input their username and password -->
+<!-- The form submits the data to the backend API for user registration -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <!-- Link to the external stylesheet for consistent styling across the application -->
+    <link rel="stylesheet" href="/static/assets/css/styles.css">
+</head>
+<body>
+    <h1>User Registration</h1>
+    <!-- Registration form for new users -->
+    <form id="registrationForm">
+        <!-- Input field for the username -->
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <!-- Input field for the password -->
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <!-- Submit button to register the user -->
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        // Add an event listener to handle form submission
+        document.getElementById('registrationForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission behavior
+
+            // Collect the username and password from the form inputs
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Send a POST request to the backend API for user registration
+            const response = await fetch('/api/users/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }), // Send the username and password as JSON
+            });
+
+            // Handle the response from the server
+            if (response.ok) {
+                alert('Registration successful!'); // Notify the user of successful registration
+            } else {
+                alert('Registration failed. Please try again.'); // Notify the user of a failure
+            }
+        });
+    </script>
+</body>
+</html>
