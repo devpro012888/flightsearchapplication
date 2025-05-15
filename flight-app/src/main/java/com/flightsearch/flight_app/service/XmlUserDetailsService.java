@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class XmlUserDetailsService implements UserDetailsService {
     // Use the absolute path to ensure the file is found in both dev and prod
     private static final String USERS_XML_PATH = "flight-app/users.xml";
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
